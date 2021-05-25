@@ -3,52 +3,18 @@ import React from "react";
 class Menu extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			error: null,
-			isLoaded: false,
-			items: [],
-		};
-	}
-
-	componentDidMount() {
-		fetch("https://cms.talkdesk.com/wp-json/external/globalsearch")
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						isLoaded: true,
-						items: result.menu,
-					});
-				},
-				// Note: it's important to handle errors here
-				// instead of a catch() block so that we don't swallow
-				// exceptions from actual bugs in components.
-				(error) => {
-					this.setState({
-						isLoaded: true,
-						error,
-					});
-				}
-			);
 	}
 
 	render() {
-		const { error, isLoaded, items } = this.state;
-		if (error) {
-			return <div>Error: {error.message}</div>;
-		} else if (!isLoaded) {
-			return <div>Loading...</div>;
-		} else {
-			return (
-				<ul>
-					{items.map((item) => (
-						<li key={item.id}>
-							{item.label}
-						</li>
-					))}
-				</ul>
-			);
-		}
+		return (
+			<div className="menu">
+				{this.props.menuItems.map((item) => (
+					<div key={item.id}>
+						<a href="/">{item.label}</a>
+					</div>
+				))}
+			</div>
+		);
 	}
 }
 

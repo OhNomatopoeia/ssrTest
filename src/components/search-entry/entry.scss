@@ -1,0 +1,28 @@
+.post {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	margin: 20px;
+	background-color: white;
+	padding: 20px;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.2);
+	}
+}
+
+.category {
+	color: #5405bd;
+	text-transform: uppercase;
+}
+
+.date {
+	margin-left: 10px;
+	text-transform: uppercase;
+}
+
+a{
+    text-decoration: none;
+    color: black
+}

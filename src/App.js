@@ -1,13 +1,13 @@
-import './App.css';
-import React from 'react';
-import Menu from './components/menu'
+import "./App.css";
+import React from "react";
+import SearchPage from "./pages/search-page";
 
 function App() {
-  return (
-    <>
-    <Menu/>
-    </>
-  );
+	return (
+		<>
+			<SearchPage />
+		</>
+	);
 }
 
 export default App;
