@@ -4,38 +4,8 @@ class SearchBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			posts: {
-        data:[],
-        entry:''
-      },
 			inputValue: "",
 		};
-	}
-
-	searchRequest(keyword) {
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				category: "",
-				keyword: keyword,
-				page: 1,
-				posts_per_page: 10,
-			}),
-		};
-		fetch(
-			"https://cms.talkdesk.com/wp-json/web-api/v1/content/search",
-			requestOptions
-		).then((res) => res.json())
-    .then((result) => {
-			this.setState({
-				posts: {
-          data: result.data,
-          entry: keyword
-        },
-			});
-			this.props.parentCallback(this.state.posts );
-		});
 	}
 
 	updateInputValue(evt) {
@@ -45,7 +15,7 @@ class SearchBar extends React.Component {
 	}
 
 	onTrigger = (event) => {
-		this.searchRequest(this.state.inputValue);
+		this.props.parentCallback(this.state.inputValue);
 		event.preventDefault();
 	};
 

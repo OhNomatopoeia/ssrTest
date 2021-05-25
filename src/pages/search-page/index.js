@@ -17,7 +17,8 @@ class SearchPage extends React.Component {
 			perPage: 10,
 			currentPage: 0,
 			totalPosts: 0,
-			searchParam: "",
+			searchInput: "",
+			filter: "",
 		};
 	}
 
@@ -25,10 +26,15 @@ class SearchPage extends React.Component {
 		this.getInfo();
 	}
 
-	handleCallback = (searchData) => {
-		this.setState({ searchParam: searchData.entry });
-		this.setState({ searchFilter: searchData.filter });
-		this.postsTreatment(searchData.data);
+	handleCallbackSearch = (searchInput) => {
+		this.setState({ searchInput });
+        this.setState({ filter: '' });
+		this.getSearchInfo(searchInput, '');
+	};
+
+	handleCallbackFilter = (filter) => {
+		this.setState({ filter });
+		this.getSearchInfo(this.state.searchInput, filter);
 	};
 
 	getInfo() {
@@ -47,13 +53,14 @@ class SearchPage extends React.Component {
 			);
 	}
 
-	getSearchInfo() {
+	getSearchInfo( searchInput, filter ) {
+        console.log (searchInput,filter,'hi')
 		const requestOptions = {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				category: "",
-				keyword: this.state.searchParam,
+				category: filter,
+				keyword: (this.state.searchInput ? this.state.searchInput : searchInput),
 				page: this.state.currentPage + 1,
 				posts_per_page: 10,
 			}),
@@ -105,7 +112,7 @@ class SearchPage extends React.Component {
 				offset: offset,
 			},
 			() => {
-				if (this.state.searchParam) {
+				if (this.state.searchInput) {
 					this.getSearchInfo();
 				} else {
 					this.getInfo();
@@ -124,14 +131,18 @@ class SearchPage extends React.Component {
 			return (
 				<>
 					<div className="search-page">
-						<SearchBar parentCallback={this.handleCallback} />
+						<SearchBar parentCallback={this.handleCallbackSearch} />
 						<div className="posts-container">
-							<Menu menuItems={menu} parentCallback={this.handleCallback} />
+							<Menu
+								menuItems={menu}
+								searchParameter={this.state.searchInput}
+								parentCallback={this.handleCallbackFilter}
+							/>
 							<div className="posts">
 								<div>
 									Showing {this.state.totalPosts} results{" "}
-									{this.state.searchParam
-										? 'for "' + this.state.searchParam + '"'
+									{this.state.searchInput
+										? 'for "' + this.state.searchInput + '"'
 										: ""}
 								</div>
 								{this.state.postData}
