@@ -19,7 +19,6 @@ class SearchBar extends React.Component {
 	}
 	
 	onTrigger = (event) => {
-		console.log ('hello')
 		this.props.parentCallback(this.state.inputValue);
 		event.preventDefault();
 	};

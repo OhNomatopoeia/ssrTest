@@ -40,12 +40,14 @@ class SearchPage extends React.Component {
 
 	handleCallbackSearch = (searchInput) => {
 		this.setState({ searchInput });
+		this.setState({ currentPage: 0 });
 		this.setState({ filter: "" });
 		this.getSearchInfo(searchInput, "");
 	};
 
 	handleCallbackFilter = (filter) => {
 		this.setState({ filter });
+		this.setState({ currentPage: 0 });
 		this.getSearchInfo(this.state.searchInput, filter);
 	};
 
@@ -119,7 +121,9 @@ class SearchPage extends React.Component {
 	}
 
 	handlePageClick = (e) => {
-		const selectedPage = e.selected;
+		const selectedPage = (this.state.searchInput ? this.state.currentPage + 1 : e.selected);
+
+		console.log (selectedPage)
 		const offset = selectedPage * this.state.perPage;
 		this.setState(
 			{
@@ -152,9 +156,9 @@ class SearchPage extends React.Component {
 		} else if (!isLoaded) {
 			return (
 				<div className="loading">
-					<div class="snippet" data-title=".dot-shuttle">
-						<div class="stage filter-contrast">
-							<div class="dot-shuttle"></div>
+					<div className="snippet" data-title=".dot-shuttle">
+						<div className="stage filter-contrast">
+							<div className="dot-shuttle"></div>
 						</div>
 					</div>
 				</div>
@@ -196,6 +200,7 @@ class SearchPage extends React.Component {
 											</div>
 											{this.state.postData}
 											<ReactPaginate
+											forcePage={this.state.currentPage}
 												previousLabel={"<"}
 												nextLabel={">"}
 												breakLabel={
