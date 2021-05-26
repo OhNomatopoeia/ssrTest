@@ -19,6 +19,7 @@ class SearchBar extends React.Component {
 	}
 	
 	onTrigger = (event) => {
+		console.log ('hello')
 		this.props.parentCallback(this.state.inputValue);
 		event.preventDefault();
 	};
@@ -35,7 +36,7 @@ class SearchBar extends React.Component {
 						value={this.state.inputValue}
 						onChange={(evt) => this.updateInputValue(evt)}
 					/>
-					<button type="submit" value="Submit" className="search-button" id="search-button">Search</button>
+					<input type="submit" value="Search" className="search-button" id="search-button"/>
 				</form>
 			</div>
 		);
